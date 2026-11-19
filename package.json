@@ -1,0 +1,10 @@
+{
+  "name": "suanming",
+  "version": "4.1.0",
+  "private": true,
+  "type": "module",
+  "description": "命盘解剖台：一份可逐项复查的八字排盘，和它的三种讲法。纯静态，无构建。",
+  "scripts": {
+    "test": "node test/equivalence.mjs"
+  }
+}

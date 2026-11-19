@@ -1,0 +1,129 @@
+/* ==========================================================================
+   设计变量 —— 纸、墨、印
+   浅色：宣纸 / 墨字 / 朱砂印
+   深色：夜墨 / 月白 / 朱砂
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --paper: #e7e0d2;
+  --surface: #f7f3ea;
+  --surface-2: #f0eadd;
+  --surface-3: #e5dccb;
+
+  --ink: #1b1a17;
+  --ink-2: #575248;
+  --ink-3: #6f6759;
+
+  --line: #ded3c1;
+  --line-2: #c8bba4;
+
+  --seal: #a63a2b;
+  --seal-soft: #f0ddd6;
+  --gold: #85612c;
+  --gold-soft: #f1e5cd;
+  --good: #3c6a50;
+  --good-soft: #e2ebe1;
+  --bad: #a63a2b;
+  --bad-soft: #f0ddd6;
+  --calm: #7b7365;
+  --calm-soft: #ece6da;
+
+  --wx-mu: #3f6b4f;
+  --wx-huo: #b2473a;
+  --wx-tu: #98742f;
+  --wx-jin: #7c7466;
+  --wx-shui: #3f6579;
+
+  --font-display: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", "SimSun", serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Segoe UI", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+
+  --app-max: 680px;
+  --gutter: 20px;
+  --radius-lg: 22px;
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --dur: 0.3s;
+  --ease: cubic-bezier(0.22, 0.78, 0.22, 1);
+
+  --shadow-card: 0 1px 0 rgba(27, 26, 23, 0.03);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --paper: #0b0a09;
+    --surface: #141311;
+    --surface-2: #1c1a17;
+    --surface-3: #26221c;
+
+    --ink: #efe8da;
+    --ink-2: #b6ad9d;
+    --ink-3: #8a8172;
+
+    --line: #2e2a23;
+    --line-2: #423b30;
+
+    --seal: #e06f5b;
+    --seal-soft: #2c1a16;
+    --gold: #d3a765;
+    --gold-soft: #2a2216;
+    --good: #7fb894;
+    --good-soft: #16241a;
+    --bad: #e06f5b;
+    --bad-soft: #2c1a16;
+    --calm: #8a8172;
+    --calm-soft: #221f1a;
+
+    --wx-mu: #86bc9a;
+    --wx-huo: #e6897a;
+    --wx-tu: #d0a960;
+    --wx-jin: #b6ad9d;
+    --wx-shui: #81aac1;
+
+    --shadow-card: none;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #0b0a09;
+  --surface: #141311;
+  --surface-2: #1c1a17;
+  --surface-3: #26221c;
+
+  --ink: #efe8da;
+  --ink-2: #b6ad9d;
+  --ink-3: #8a8172;
+
+  --line: #2e2a23;
+  --line-2: #423b30;
+
+  --seal: #e06f5b;
+  --seal-soft: #2c1a16;
+  --gold: #d3a765;
+  --gold-soft: #2a2216;
+  --good: #7fb894;
+  --good-soft: #16241a;
+  --bad: #e06f5b;
+  --bad-soft: #2c1a16;
+  --calm: #8a8172;
+  --calm-soft: #221f1a;
+
+  --wx-mu: #86bc9a;
+  --wx-huo: #e6897a;
+  --wx-tu: #d0a960;
+  --wx-jin: #b6ad9d;
+  --wx-shui: #81aac1;
+
+  --shadow-card: none;
+}
+
+:root[data-theme="light"] { color-scheme: light; }

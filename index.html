@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>命盘解剖台 · 三个故事，一份盘</title>
+  <meta name="description" content="一份能逐项复查的八字排盘，和它被讲成的三种故事：原句、美话、焦虑。差别不在盘里。">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f3ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="命盘解剖台">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="命盘解剖台">
+  <meta property="og:description" content="一份盘，三种讲法。看话术是怎么长出来的。">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ============================ 封面 ============================ -->
+    <section id="screen-cover" class="screen screen-cover is-active" aria-label="封面">
+      <div class="cover-ring-wrap" aria-hidden="true">
+      <svg class="cover-ring" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="200" cy="200" r="186" opacity=".7"/>
+          <circle cx="200" cy="200" r="154" opacity=".45"/>
+        </g>
+        <circle cx="200" cy="200" r="170" fill="none" stroke="currentColor" stroke-width=".6"
+                stroke-dasharray="1 7" opacity=".8"/>
+        <g fill="currentColor" font-size="12.5" text-anchor="middle" dominant-baseline="central"
+           font-family="Songti SC, STSong, Noto Serif CJK SC, serif">
+          <text x="200" y="30">子</text>
+          <text x="285" y="52.8">丑</text>
+          <text x="347.2" y="115">寅</text>
+          <text x="370" y="200">卯</text>
+          <text x="347.2" y="285">辰</text>
+          <text x="285" y="347.2">巳</text>
+          <text x="200" y="370">午</text>
+          <text x="115" y="347.2">未</text>
+          <text x="52.8" y="285">申</text>
+          <text x="30" y="200">酉</text>
+          <text x="52.8" y="115">戌</text>
+          <text x="115" y="52.8">亥</text>
+        </g>
+      </svg>
+      </div>
+
+      <div class="cover-top">
+        <span class="eyebrow">话术解剖 · 卷一</span>
+        <span class="stamp" aria-hidden="true">命</span>
+      </div>
+
+      <div class="cover-main">
+        <h1 class="cover-title display">
+          <span>命盘</span>
+          <span class="is-seal">解剖台</span>
+        </h1>
+        <p class="cover-lede lede">同一份出生信息，一份能逐项复查的盘，和它被讲成的三种故事。</p>
+        <ol class="steps">
+          <li><b>01</b>输入</li>
+          <li><b>02</b>排盘</li>
+          <li><b>03</b>对照</li>
+        </ol>
+
+        <div class="cover-spec" aria-hidden="true">
+          <span class="spec-quote"><b>原句</b><em>命书判词</em></span>
+          <span class="spec-flatter"><b>美话</b><em>往舒服讲</em></span>
+          <span class="spec-anxiety"><b>焦虑</b><em>往害怕讲</em></span>
+        </div>
+      </div>
+
+      <div class="cover-foot">
+        <button class="btn btn-primary btn-lg" id="btn-start" type="button">
+          开始解剖<span class="btn-arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="fineprint">排盘由确定性代码计算。话术是模板生成的样本，不是预测。</p>
+      </div>
+    </section>
+
+    <!-- ============================ 输入 ============================ -->
+    <section id="screen-input" class="screen screen-input" aria-label="输入出生信息" hidden>
+      <div class="topbar">
+        <button class="icon-btn" id="btn-home" type="button" aria-label="回到封面">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 5 8 12l7 7"/>
+          </svg>
+        </button>
+        <span class="topbar-label">01 · 输入</span>
+      </div>
+
+      <header class="page-head">
+        <h1 class="display display-md">出生信息</h1>
+        <p class="lede">只用公历。时间记不准也没关系，结果里会列出相邻时辰的时柱。</p>
+      </header>
+
+      <form class="page" id="birth-form" novalidate>
+        <div class="form">
+          <div class="row">
+            <span class="row-label" id="date-row-label">公历生日</span>
+            <span class="row-value" id="date-value">1995.06.18</span>
+            <input type="hidden" id="in-date" name="date" value="1995-06-18">
+            <button class="native" type="button" id="date-open" aria-haspopup="dialog"
+                    aria-expanded="false" aria-labelledby="date-row-label date-value"></button>
+          </div>
+
+          <label class="row">
+            <span class="row-label">出生时间</span>
+            <span class="row-value" id="time-value">12:00</span>
+            <input class="native" type="time" id="in-time" name="time" value="12:00">
+          </label>
+
+          <label class="row">
+            <span class="row-label">时间记不准</span>
+            <span class="switch">
+              <input type="checkbox" id="in-uncertain" name="uncertain">
+              <i aria-hidden="true"></i>
+            </span>
+          </label>
+
+          <div class="row">
+            <span class="row-label">性别</span>
+            <div class="segmented" id="gender" data-v="男" role="group" aria-label="性别">
+              <span class="seg-thumb" aria-hidden="true"></span>
+              <button type="button" data-g="男" class="on" aria-pressed="true">男</button>
+              <button type="button" data-g="女" aria-pressed="false">女</button>
+            </div>
+          </div>
+
+          <label class="row">
+            <span class="row-label">出生省份</span>
+            <span class="row-value" id="province-value">北京</span>
+            <select class="native" id="in-province" name="province"></select>
+          </label>
+
+          <label class="row">
+            <span class="row-label">出生城市</span>
+            <span class="row-value" id="city-value">北京</span>
+            <select class="native" id="in-city" name="city">
+              <option value="116.43">北京</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="form-note">城市只用于修正真太阳时：经度每偏离东经 120° 一度，时间修正四分钟。</p>
+        <p class="form-note preview-note">排完之后，同一份盘会并排写成三种：<b>原句</b>、<b>美话</b>、<b>焦虑</b>。</p>
+        <p class="form-error" id="form-error" role="alert" hidden></p>
+      </form>
+
+      <div class="cta-dock">
+        <button class="btn btn-primary btn-lg" id="btn-submit" type="submit" form="birth-form">
+          生成命盘<span class="btn-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================ 结果 ============================ -->
+    <section id="screen-result" class="screen screen-result" aria-label="命盘结果" hidden>
+      <div class="topbar">
+        <button class="icon-btn" id="btn-back" type="button" aria-label="返回修改出生信息">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 5 8 12l7 7"/>
+          </svg>
+        </button>
+        <span class="topbar-label">02 · 命盘</span>
+        <button class="text-btn" id="btn-restart" type="button">重测</button>
+      </div>
+
+      <header class="hero" id="hero"></header>
+
+      <nav class="tabs" id="tabs" role="tablist" aria-label="命盘的三种讲法"></nav>
+
+      <main>
+        <section class="panel" data-panel="facts" id="panel-facts" role="tabpanel" aria-labelledby="tab-facts"></section>
+        <section class="panel" data-panel="quote" id="panel-quote" role="tabpanel" aria-labelledby="tab-quote"></section>
+        <section class="panel" data-panel="flatter" id="panel-flatter" role="tabpanel" aria-labelledby="tab-flatter"></section>
+        <section class="panel" data-panel="anxiety" id="panel-anxiety" role="tabpanel" aria-labelledby="tab-anxiety"></section>
+      </main>
+
+      <footer class="colophon" id="colophon"></footer>
+    </section>
+
+  </div>
+
+  <!-- ======================= 公历生日选择面板 ======================= -->
+  <div class="sheet" id="date-sheet" hidden>
+    <div class="sheet-scrim" data-sheet-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">
+      <div class="sheet-grab" aria-hidden="true"></div>
+      <header class="sheet-head">
+        <div>
+          <span class="eyebrow">公历</span>
+          <h2 class="display display-sm" id="sheet-title">选出生日期</h2>
+        </div>
+        <button class="icon-btn" type="button" id="sheet-close" aria-label="收起日期面板">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+
+      <div class="sheet-body">
+        <div class="dp-year">
+          <label for="dp-year">年</label>
+          <input id="dp-year" type="text" inputmode="numeric" autocomplete="off"
+                 maxlength="4" pattern="[0-9]*" aria-describedby="dp-range" value="1995">
+          <span class="dp-range" id="dp-range">1900–2026</span>
+        </div>
+
+        <div class="dp-block">
+          <span class="dp-label" id="dp-month-label">月</span>
+          <div class="dp-chips dp-months" id="dp-months" role="group" aria-labelledby="dp-month-label"></div>
+        </div>
+
+        <div class="dp-block">
+          <span class="dp-label" id="dp-day-label">日</span>
+          <div class="dp-chips dp-days" id="dp-days" role="group" aria-labelledby="dp-day-label"></div>
+        </div>
+
+        <p class="dp-preview" id="dp-preview" aria-live="polite"></p>
+      </div>
+
+      <div class="sheet-foot">
+        <button class="btn btn-primary btn-lg" type="button" id="dp-ok">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <noscript>
+    <p style="padding:24px;font:16px/1.8 sans-serif">这个页面需要 JavaScript 才能排盘。</p>
+  </noscript>
+
+  <script src="vendor/lunar.js" defer></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

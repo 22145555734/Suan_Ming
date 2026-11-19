@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="命盘解剖台">
+  <defs>
+    <linearGradient id="seal" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#b24634"/>
+      <stop offset="0.55" stop-color="#a63a2b"/>
+      <stop offset="1" stop-color="#8f2f22"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#f7f3ea"/>
+  <rect x="22" y="22" width="468" height="468" rx="96" fill="url(#seal)"/>
+  <rect x="40" y="40" width="432" height="432" rx="80" fill="none" stroke="#f7f3ea" stroke-opacity="0.45" stroke-width="2.5"/>
+  <g fill="#f7f3ea" opacity="0.9" font-family="Songti SC, STSong, Noto Serif CJK SC, SimSun, serif">
+    <text x="256" y="262" text-anchor="middle" dominant-baseline="central" font-size="272" font-weight="600">命</text>
+  </g>
+</svg>

@@ -1,0 +1,475 @@
+<meta charset="utf-8">
+<title>命盘解剖台</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* 布局：控制台输入 → 全宽事实表 → 左右两栏话术对照 */
+  :root {
+    --bg: #f3f5f5;
+    --surface: #ffffff;
+    --surface-2: #eaeef0;
+    --ink: #13181c;
+    --ink-2: #566269;
+    --ink-3: #7d8a92;
+    --line: #dbe1e3;
+    --line-strong: #c3ccd0;
+    --accent: #0a6b62;
+    --accent-soft: #e0f1ef;
+    --warm: #9a5b06;
+    --warm-soft: #fbefdb;
+    --hot: #b0281d;
+    --hot-soft: #fbe8e6;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --radius: 12px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c1013;
+      --surface: #141a1e;
+      --surface-2: #1b2328;
+      --ink: #e6ebee;
+      --ink-2: #9dabb4;
+      --ink-3: #6e7d86;
+      --line: #242e34;
+      --line-strong: #35424a;
+      --accent: #4fd1c1;
+      --accent-soft: #0f2b29;
+      --warm: #e5b45c;
+      --warm-soft: #2a2113;
+      --hot: #ef8078;
+      --hot-soft: #2d1715;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c1013;
+    --surface: #141a1e;
+    --surface-2: #1b2328;
+    --ink: #e6ebee;
+    --ink-2: #9dabb4;
+    --ink-3: #6e7d86;
+    --line: #242e34;
+    --line-strong: #35424a;
+    --accent: #4fd1c1;
+    --accent-soft: #0f2b29;
+    --warm: #e5b45c;
+    --warm-soft: #2a2113;
+    --hot: #ef8078;
+    --hot-soft: #2d1715;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 72px;
+  }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    padding-top: 6vh;
+    padding-bottom: 6vh;
+  }
+  .cover h1, .cover .lede { margin: 0; }
+  .submit.start {
+    align-self: stretch;
+    width: 100%;
+    max-width: 100%;
+    height: 52px;
+    font-size: 16px;
+    letter-spacing: 0.12em;
+  }
+  .cover-note { margin: 0; font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .result-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .ghost {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--ink-2);
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  h1 {
+    margin: 10px 0 14px;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0 0 28px;
+    max-width: 60ch;
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .console {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field > span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--ink-3);
+  }
+  .field input[type="date"],
+  .field input[type="time"],
+  .field select {
+    width: 100%;
+    min-width: 0;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--line-strong);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .segmented button:focus-visible,
+  .submit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .field.check {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding-top: 24px;
+  }
+  .field.check input { width: 16px; height: 16px; accent-color: var(--accent); }
+  .field.check span { font-size: 12px; color: var(--ink-2); letter-spacing: 0; font-weight: 400; }
+
+  .segmented { display: flex; height: 38px; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden; }
+  .segmented button {
+    flex: 1;
+    border: 0;
+    background: var(--bg);
+    color: var(--ink-2);
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .segmented button + button { border-left: 1px solid var(--line-strong); }
+  .segmented button.on { background: var(--accent); color: var(--bg); font-weight: 600; }
+
+  .submit {
+    align-self: end;
+    height: 38px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .submit:hover { filter: brightness(1.08); }
+
+  .facts {
+    margin-top: 28px;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .facts-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 16px;
+    margin-bottom: 16px;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .facts-sub { font-size: 12px; color: var(--ink-3); font-family: var(--font-mono); }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  th { color: var(--ink-3); font-weight: 600; font-size: 11px; letter-spacing: 0.06em; }
+  td.ganzhi { font-family: var(--font-mono); font-size: 16px; font-weight: 600; letter-spacing: 0.08em; }
+  tbody tr:last-child td { border-bottom: 0; }
+
+  .lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .facts h3 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .wx-row {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) 48px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .wx-track { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .wx-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+  .wx-val { text-align: right; font-family: var(--font-mono); color: var(--ink-2); font-size: 11px; }
+
+  .verdict { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+  .verdict small { display: block; margin-top: 4px; font-size: 12px; font-weight: 400; color: var(--ink-3); font-family: var(--font-mono); letter-spacing: 0; }
+
+  .dayun-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .dy {
+    flex: 0 0 auto;
+    min-width: 62px;
+    padding: 7px 9px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .dy b { display: block; color: var(--ink); font-size: 13px; font-weight: 600; }
+  .dy.now { border-color: var(--accent); background: var(--accent-soft); }
+  .dy.now b { color: var(--accent); }
+
+  .hour-note {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--warm);
+    background: var(--warm-soft);
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .hour-note strong { display: block; margin-bottom: 3px; font-size: 12px; letter-spacing: 0.04em; }
+  .hour-note .alt { font-family: var(--font-mono); }
+
+  .liunian-block { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .liunian-scroll { display: flex; flex-wrap: wrap; gap: 6px; padding-bottom: 4px; }
+  .ln { flex: 0 0 auto; width: 78px; padding: 7px 8px; border: 1px solid var(--line); border-radius: 7px; font-size: 11px; line-height: 1.45; color: var(--ink-2); }
+  .ln b { display: block; font-family: var(--font-mono); font-size: 12px; color: var(--ink); }
+  .ln span { display: block; color: var(--ink-2); font-family: var(--font-mono); }
+  .ln i { display: block; font-style: normal; color: var(--ink-3); font-size: 10px; }
+  .ln em { display: block; font-style: normal; font-weight: 700; color: var(--ink-2); }
+  .ln.good { border-color: var(--accent); background: var(--accent-soft); }
+  .ln.good em { color: var(--accent); }
+  .ln.bad { border-color: var(--hot); background: var(--hot-soft); }
+  .ln.bad em { color: var(--hot); }
+  .ln.past { opacity: 0.6; }
+  .ln.now { box-shadow: inset 0 0 0 2px var(--ink); opacity: 1; }
+  .peach { margin-top: 10px; font-size: 12px; color: var(--ink-2); line-height: 1.7; font-family: var(--font-mono); }
+
+  .triple {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 40px;
+  }
+  .story { min-width: 0; border-top: 3px solid var(--warm); padding-top: 16px; }
+  .story.anxiety { border-top-color: var(--hot); }
+  .story.source { border-top-color: var(--line-strong); }
+  .source .kicker { color: var(--ink-2); }
+  .story-head { margin-bottom: 6px; }
+  .kicker { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: var(--warm); }
+  .anxiety .kicker { color: var(--hot); }
+  .kicker-sub { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-3); }
+
+  .line { padding: 15px 0; border-bottom: 1px dashed var(--line); }
+  .line:last-child { border-bottom: 0; }
+  .line p { margin: 0; font-size: 15px; line-height: 1.9; color: var(--ink); }
+  .basis { display: block; margin-top: 9px; font-size: 11px; color: var(--ink-3); font-family: var(--font-mono); }
+  .quote-text { margin: 0 0 5px; font-size: 14px; line-height: 1.8; color: var(--ink); }
+  .quote-plain { margin: 0; font-size: 13px; line-height: 1.8; color: var(--ink-3); }
+
+  .foot {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--ink-3);
+    max-width: 72ch;
+  }
+
+  @media (max-width: 900px) {
+    .console { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lower { grid-template-columns: 1fr; gap: 18px; }
+  }
+  @media (max-width: 980px) {
+    .triple { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 520px) {
+    .console { grid-template-columns: 1fr; }
+    .field.check { padding-top: 0; }
+    .page { padding-block: 24px 56px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<div class="page">
+  <section class="screen active" id="screen-cover">
+    <div class="cover">
+      <div class="eyebrow">话术解剖 · SUAN MING</div>
+      <h1>命盘解剖台</h1>
+      <p class="lede">同一份出生信息，左边是代码算出来的事实，右边是它被讲成的两个故事。差别几乎从不出现在事实里。</p>
+      <button class="submit start" id="start-btn" type="button">开始测验</button>
+      <p class="cover-note">排盘由确定性代码计算，话术是规则模板生成的样本。不是预测。</p>
+    </div>
+  </section>
+
+  <section class="screen" id="screen-input">
+    <header class="masthead">
+      <div class="eyebrow">第一步 · 输入</div>
+      <h1>出生信息</h1>
+      <p class="lede">时间记不准就勾上，结果页会列出相邻时柱。</p>
+    </header>
+
+    <form class="console" id="form">
+      <label class="field">
+        <span>公历生日</span>
+        <input type="date" id="date" value="2005-01-13" required>
+      </label>
+      <label class="field">
+        <span>出生时间</span>
+        <input type="time" id="time" value="01:00">
+      </label>
+      <label class="field check">
+        <input type="checkbox" id="uncertain">
+        <span>时间记不准</span>
+      </label>
+      <div class="field">
+        <span>性别</span>
+        <div class="segmented" id="gender" role="group" aria-label="性别">
+          <button type="button" data-v="男" class="on">男</button>
+          <button type="button" data-v="女">女</button>
+        </div>
+      </div>
+      <label class="field">
+        <span>出生城市</span>
+        <select id="city">
+          <option value="116.4">北京</option>
+          <option value="121.5">上海</option>
+          <option value="113.3" selected>大同</option>
+          <option value="113.3">广州</option>
+          <option value="114.1">深圳</option>
+          <option value="104.1">成都</option>
+          <option value="108.9">西安</option>
+          <option value="120.2">杭州</option>
+          <option value="126.6">哈尔滨</option>
+          <option value="87.6">乌鲁木齐</option>
+        </select>
+      </label>
+      <button class="submit" type="submit">生成结果</button>
+    </form>
+  </section>
+
+  <section class="screen" id="screen-result">
+    <header class="masthead result-head">
+      <div>
+        <div class="eyebrow">第二步 · 结果</div>
+        <h1>命盘解剖</h1>
+      </div>
+      <button class="ghost" id="back-btn" type="button">重测</button>
+    </header>
+
+    <section class="facts" id="facts" aria-live="polite">
+      <div class="facts-head">
+        <span class="section-label">裸事实</span>
+        <span class="facts-sub" id="facts-sub"></span>
+      </div>
+      <div id="facts-body"></div>
+    </section>
+
+    <section class="triple" id="stories">
+      <article class="story source">
+        <div class="story-head">
+          <span class="kicker">原句</span>
+          <span class="kicker-sub">命理术语原文，原料</span>
+        </div>
+        <div class="lines" id="source-lines"></div>
+      </article>
+      <article class="story flatter">
+        <div class="story-head">
+          <span class="kicker">美话</span>
+          <span class="kicker-sub">同一份盘，它想让你舒服</span>
+        </div>
+        <div class="lines" id="flatter-lines"></div>
+      </article>
+      <article class="story anxiety">
+        <div class="story-head">
+          <span class="kicker">焦虑</span>
+          <span class="kicker-sub">同一份盘，它想让你害怕</span>
+        </div>
+        <div class="lines" id="anxiety-lines"></div>
+      </article>
+    </section>
+
+    <footer class="foot">
+      <p>排盘由确定性代码计算，可复查。流年吉凶与桃花按简化规则判，不是命理界定论。原句取自传统命理术语（《滴天髓》等），白话与包装层是规则模板生成的样本，不是预测，也不针对任何具体的人。两版的事实核完全相同。</p>
+    </footer>
+  </section>
+</div>
+
+<script src="vendor/lunar.js?v=3"></script>
+<script src="app.js?v=3"></script>

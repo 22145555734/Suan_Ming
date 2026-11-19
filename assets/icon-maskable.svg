@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="命盘解剖台">
+  <rect width="512" height="512" fill="#a63a2b"/>
+  <rect x="34" y="34" width="444" height="444" rx="56" fill="none" stroke="#f7f3ea" stroke-opacity="0.4" stroke-width="2.5"/>
+  <text x="256" y="264" text-anchor="middle" dominant-baseline="central"
+        font-family="Songti SC, STSong, Noto Serif CJK SC, SimSun, serif"
+        font-size="272" font-weight="600" fill="#f7f3ea">命</text>
+</svg>
