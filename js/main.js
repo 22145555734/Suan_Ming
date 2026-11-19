@@ -275,6 +275,53 @@ function bindDateSheet() {
   });
 }
 
+/* ------------------------------ 求 star ------------------------------ */
+
+const STAR_KEY = 'suanming.star.v1';
+
+function starSeen() {
+  try { return localStorage.getItem(STAR_KEY) === '1'; } catch (e) { return false; }
+}
+
+function markStarSeen() {
+  try { localStorage.setItem(STAR_KEY, '1'); } catch (e) { /* 隐私模式 */ }
+}
+
+function setupStar() {
+  const card = $('#star-card');
+  if (!card || starSeen()) return;
+
+  const close = () => {
+    markStarSeen();
+    card.classList.remove('is-on');
+    setTimeout(() => { card.hidden = true; }, 360);
+  };
+
+  const show = () => {
+    markStarSeen();
+    card.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('is-on')));
+  };
+
+  $('#star-close').addEventListener('click', close);
+  $('#star-later').addEventListener('click', close);
+  $('#star-go').addEventListener('click', close);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !card.hidden) close();
+  });
+
+  if (!('IntersectionObserver' in window)) return;
+
+  const io = new IntersectionObserver((entries) => {
+    if (!entries.some((en) => en.isIntersecting)) return;
+    io.disconnect();
+    setTimeout(() => { if (card.hidden) show(); }, 700);
+  }, { threshold: 0.35 });
+
+  io.observe($('#colophon'));
+}
+
 function boot() {
   load();
 
@@ -291,6 +338,7 @@ function boot() {
   timeLabel();
   syncPlace();
   setGender(state.gender);
+  setupStar();
 }
 
 /* ------------------------------ 事件 ------------------------------ */

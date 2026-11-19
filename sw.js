@@ -1,5 +1,5 @@
 /* 离线缓存：页面用网络优先，静态资源用「先给旧的、后台更新」。 */
-const VERSION = 'suanming-v2.0.5';
+const VERSION = 'suanming-v2.0.6';
 
 const ASSETS = [
   './',

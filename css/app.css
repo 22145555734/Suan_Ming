@@ -1049,6 +1049,96 @@
   color: var(--line-2);
 }
 
+.signature .star-link {
+  margin-left: 10px;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  white-space: nowrap;
+}
+
+.signature .star-link:hover,
+.signature .star-link:focus-visible {
+  color: var(--seal);
+  border-color: var(--seal);
+}
+
+/* ==========================================================================
+   求 star
+   ========================================================================== */
+
+.star-card {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + var(--safe-bottom));
+  z-index: 70;
+  width: min(420px, calc(100vw - 32px));
+  padding: 18px 20px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgb(27 26 23 / 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 14px);
+  transition: opacity 0.32s var(--ease), transform 0.32s var(--ease), visibility 0.32s;
+}
+
+.star-card.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+html:not([data-screen="result"]) .star-card { display: none; }
+
+.star-card .eyebrow { font-size: 9px; }
+
+.star-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
+  color: var(--ink-3);
+}
+
+.star-title {
+  margin: 8px 0 6px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.star-body {
+  max-width: 30em;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+.star-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.star-actions .btn {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+
+.star-actions .btn-primary { flex: 1; }
+
+@media (prefers-color-scheme: dark) {
+  .star-card {
+    background: var(--surface-2);
+    box-shadow: 0 24px 60px rgb(0 0 0 / 0.5);
+  }
+}
+
 /* ==========================================================================
    动画
    ========================================================================== */

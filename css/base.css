@@ -124,6 +124,7 @@ h1, h2, h3, p, dl, dd, ol, ul { margin: 0; }
   font-size: 15.5px;
   font-weight: 600;
   letter-spacing: 0.06em;
+  text-decoration: none;
   transition: transform 0.16s var(--ease), background 0.2s, border-color 0.2s, opacity 0.2s;
 }
 

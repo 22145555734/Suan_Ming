@@ -63,5 +63,14 @@ export function renderColophon() {
     el('span', { class: 'is-seal', text: UI.result.coda[1] })
   ]));
   root.appendChild(el('p', { class: 'disclaimer', text: UI.result.colophon }));
-  root.appendChild(el('p', { class: 'signature', text: '纸 · 墨 · 印 —— 一份可复查的样本' }));
+  root.appendChild(el('p', { class: 'signature' }, [
+    el('span', { text: '纸 · 墨 · 印 —— 一份可复查的样本' }),
+    el('a', {
+      class: 'star-link',
+      href: 'https://github.com/22145555734/Suan_Ming',
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      text: 'GitHub · star'
+    })
+  ]));
 }
